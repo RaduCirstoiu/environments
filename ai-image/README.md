@@ -4,9 +4,17 @@ This environment provides a containerized workspace for AI development.
 
 ## Getting Started
 
-### 1. Create and Run the Container
+### 1. Build the Image
 
-To build and start the container, use the following command:
+Build the Docker image from the Dockerfile:
+
+```bash
+nerdctl build -t ai-lab-image .
+```
+
+### 2. Run the Container
+
+Start the container in the background:
 
 ```bash
 nerdctl run -d \
@@ -14,7 +22,7 @@ nerdctl run -d \
   --restart unless-stopped \
   --env-file .env \
   -v $(pwd)/ai-workspace:/workspace \
-  ai-lab .
+  ai-lab-image
 ```
 
 **Flags Explanation:**
@@ -23,13 +31,12 @@ nerdctl run -d \
 - `--restart unless-stopped`: Ensures the container restarts automatically unless it is explicitly stopped.
 - `--env-file .env`: Loads environment variables from a local `.env` file into the container.
 - `-v $(pwd)/ai-workspace:/workspace`: Mounts the local `ai-workspace` directory to `/workspace` inside the container, ensuring data persistence.
-- `ai-lab`: Specifies the image name to use.
+- `ai-lab-image`: Specifies the image name to use (built in Step 1).
 
-### 2. Attach to the Container
+### 3. Attach to the Container
 
 To open an interactive shell inside the running container, run:
 
 ```bash
 nerdctl exec -it ai-lab bash
 ```
-
