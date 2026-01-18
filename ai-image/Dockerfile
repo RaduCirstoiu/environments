@@ -45,8 +45,11 @@ RUN mkdir -p /usr/share/maven && \
     curl -fsSL https://downloads.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz | tar -xzC /usr/share/maven --strip-components=1 && \
     ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
 
-# C. Setup Java Environment Variables
-ENV JAVA_HOME=/usr/lib/jvm/temurin-25-jdk-amd64
+# C. Setup Java Environment Variables (DYNAMIC FIX)
+# We find the installed Temurin folder (regardless of arch name) and symlink it to a static path
+RUN export INSTALLED_JAVA_DIR=$(find /usr/lib/jvm -maxdepth 1 -name "temurin-25-jdk-*" -type d | head -n 1) && \
+    ln -s "$INSTALLED_JAVA_DIR" /usr/lib/jvm/custom-java-home
+ENV JAVA_HOME=/usr/lib/jvm/custom-java-home    
 ENV PATH="${JAVA_HOME}/bin:${MAVEN_HOME}/bin:${PATH}"
 
 # 6. Setup User Sudo
