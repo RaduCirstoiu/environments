@@ -40,3 +40,12 @@ To open an interactive shell inside the running container, run:
 ```bash
 nerdctl exec -it ai-lab bash
 ```
+
+## Useful Commands
+
+```bash
+gh auth login
+gh auth setup-git
+gemini --yolo
+claude --dangerously-skip-permissions
+```
