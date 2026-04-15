@@ -41,6 +41,14 @@ To open an interactive shell inside the running container, run:
 nerdctl exec -it ai-lab bash
 ```
 
+If the container is stopped, you can alternatively restart and attach with:
+
+```bash
+nerdctl ps -a # get the stopped container id/name
+nerdctl start stoppedcontainer_name
+nerdctl exec -it restarted_container_name bash
+```
+
 ## Useful Commands
 
 ```bash
